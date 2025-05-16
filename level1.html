@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>JOKER Level 1</title>
+  <style>
+    body {
+      background: #111;
+      color: #fff;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      padding-top: 40px;
+    }
+    .container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 40px;
+    }
+    .joker {
+      width: 120px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      transition: 0.3s ease-in-out;
+    }
+    .joker:hover {
+      border-color: #ff4081;
+    }
+    #hiddenHint {
+      display: none;  /* Hide the image initially */
+      width: 300px;
+      height: auto;
+      margin: 20px auto;
+      cursor: pointer;
+    }
+    #hintTrigger {
+      cursor: pointer;
+      font-size: 24px;
+      margin-bottom: 10px;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎭 Catch Me If You Can!</h1>
+  <p>Click the jokers in the right order to catch the real culprit.</p>
+
+  <div class="container">
+    <img src="images/2.png" class="joker" data-id="1" alt="Joker 2" />
+    <img src="images/4.png" class="joker" data-id="2" alt="Joker 4" />
+    <img src="images/1.png" class="joker" data-id="3" alt="Joker 1" />
+    <img src="images/5.png" class="joker" data-id="4" alt="Joker 5" />
+    <img src="images/3.png" class="joker" data-id="5" alt="Joker 3" />
+  </div>
+
+  <script>
+    // SHA-256 hashing helper function
+    async function sha256(message) {
+      const msgBuffer = new TextEncoder().encode(message);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    // This is the SHA-256 hash of the correct sequence: "3,1,5,2,4"
+    const correctHash = "c6e6915c5a5787e90d0b41f5a8b0f66d51eb5c9be435440ab395ef8a228d521f";
+
+    let user = [];
+
+    document.querySelectorAll('.joker').forEach(el => {
+      el.addEventListener('click', async () => {
+        user.push(el.dataset.id);
+        if (user.length === 5) {
+          const userInputString = user.join(",");
+          const userHash = await sha256(userInputString);
+          if (userHash === correctHash) {
+            alert("Oh oh, you got me, but can't catch me 😈");
+            setTimeout(() => {
+              window.location.href = "level2.html";
+            }, 2000);
+          } else {
+            alert("Wrong order! Try again.");
+            user = [];
+          }
+        }
+      });
+    });
+  </script>
+
+  <h2>Click the question mark to reveal the hint</h2>
+  <p id="hintTrigger" title="Click to show/hide hint">❓</p>
+
+  <!-- Hidden hint image -->
+  <!-- Is there something in the image's EXIF? -->
+  <img id="hiddenHint" src="images/hint.png" alt="Hidden Hint" />
+
+  <script>
+    const trigger = document.getElementById('hintTrigger');
+    const hiddenHint = document.getElementById('hiddenHint');
+
+    trigger.addEventListener('click', () => {
+      if (hiddenHint.style.display === "none" || hiddenHint.style.display === "") {
+        hiddenHint.style.display = "block";
+      } else {
+        hiddenHint.style.display = "none";
+      }
+    });
+  </script>
+</body>
+</html>
