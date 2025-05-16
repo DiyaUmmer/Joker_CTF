@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Level 2 - Now You See Me</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: monospace;
+      user-select: none;
+      text-align: center;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    #gameArea {
+      display: none;
+    }
+
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="gameArea">
+    <p>I forgot my Puddin's name. Do you remember that?</p>
+    <input type="text" id="answer" placeholder="Type your answer..." />
+    <br>
+    <button onclick="checkAnswer()">Submit</button>
+  </div>
+
+  <!-- Hint hidden in source only: md5("harley quinn") = 62d9a0417248090a201042a912ebd2ff -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <script>
+    const correctHash = "62d9a0417248090a201042a912ebd2ff";
+
+    // Reveal the game area on first body click
+    document.body.addEventListener('click', function reveal() {
+      document.getElementById('gameArea').style.display = 'block';
+      document.body.style.cursor = 'default';
+      document.body.removeEventListener('click', reveal);
+    });
+
+    function checkAnswer() {
+      const input = document.getElementById("answer").value.trim().toLowerCase();
+      const inputHash = CryptoJS.MD5(input).toString();
+
+      if (inputHash === correctHash) {
+        alert("🎉 HAHAHA!!! YOU GOT IT! Here is your Flag: flag{joker_catch3d_you}");
+      } else {
+        alert("❌ Wrong answer. You can't do this to me.");
+      }
+    }
+  </script>
+
+</body>
+</html>
