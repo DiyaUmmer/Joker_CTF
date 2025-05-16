@@ -69,14 +69,10 @@
   <!-- Hint: Try using `strings` or `exiftool` to look deeper -->
   <img id="hiddenHint" src="images/hint.png" alt="Hidden Hint" />
 
-  <<script>
-(function(){
-  async function a(b){const c=new TextEncoder().encode(b),d=await crypto.subtle.digest("SHA-256",c);return Array.from(new Uint8Array(d)).map(e=>e.toString(16).padStart(2,"0")).join("")}
-  const f="c6e6915c5a5787e90d0b41f5a8b0f66d51eb5c9be435440ab395ef8a228d521f";
-  let g=[];
-  document.querySelectorAll(".joker").forEach(h=>{h.addEventListener("click",async()=>{g.push(h.dataset.id);if(g.length===5){let i=g.join(","),j=await a(i);j===f?(alert("Oh oh, you got me, but can't catch me 😈"),setTimeout(()=>{window.location.href="level2.html"},2e3)):(alert("Wrong order! Try again."),g=[])}})});
-})();
+  <script>
+  eval(atob("KGFzeW5jIGZ1bmN0aW9uIGUoYSl7Y29uc3QgYj1uZXcgVGV4dEVuY29kZXIoKS5lbmNvZGUoYSk7Y29uc3QgYz1hd2FpdCBjcnlwdG8uc3VibGUuZGlnZXN0KCJTSEEtMjU2IiwiYikiKTtyZXR1cm4gQXJyYXkuZnJvbShuZXcgVWludDhBcnJheShjKSkubWFwKGQ9PmQudG9TdHJpbmcoMTYpLnBhZFN0YXJ0KDIsIjAiKSkuam9pbigiIil9KSgpO2NvbnN0IGY9ImM2ZTY5MTVjNWE1Nzg3ZTkwZDBiNDFmNWE4YjBmNjZkNTFlYjVjOWJlNDM1NDQwYWIzOTVlZjhhMjI4ZDUyMWYiO2xldCBnPVtdO2RvY3VtZW50LnF1ZXJ5U2VsZWN0QWxsKCIuam9rZXIiKS5mb3JFYWNoKGg9PntoLmFkZEV2ZW50TGlzdGVuZXIoImNsaWNrIiwoKT0+e2cucHVzaChoLmRhdGFzZXQuaWQpO2lmKGcubGVuZ3RoPT09NSl7bGV0IGk9Zy5qb2luKCIiKSxqPWF3YWl0IGUoaSk7aj09PWY/KShhbGVydCgiT2ggb2gsIHlvdSBnb3QgbWUsIGJ1dCBjYW4ndCBjYXRjaCBtZSDwn5iI IiksIHNldFRpbWVvdXQoKCk9Pnt3aW5kb3cubG9jYXRpb24uaHJlZj0ibGV2ZWwyLmh0bWwifSwxMDAwKSk6KGFsZXJ0KCJXcm9uZyBvcmRlciEgVHJ5IGFnYWluLiIpLGc9W10pfX0pfSk7"));
 </script>
+
 
 </body>
 </html>
