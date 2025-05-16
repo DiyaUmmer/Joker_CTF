@@ -48,7 +48,6 @@
   <p>Click the jokers in the right order to catch the real culprit.</p>
 
   <div class="container">
-    <!-- Use forward slashes in paths and check the folder structure -->
     <img src="images/2.png" class="joker" data-id="1" alt="Joker 2" />
     <img src="images/4.png" class="joker" data-id="2" alt="Joker 4" />
     <img src="images/1.png" class="joker" data-id="3" alt="Joker 1" />
@@ -57,15 +56,26 @@
   </div>
 
   <script>
-    const correct = ["3", "1", "5", "2", "4"];
+    // SHA-256 hashing helper function
+    async function sha256(message) {
+      const msgBuffer = new TextEncoder().encode(message);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    // This is the SHA-256 hash of the correct sequence: "3,1,5,2,4"
+    const correctHash = "c6e6915c5a5787e90d0b41f5a8b0f66d51eb5c9be435440ab395ef8a228d521f";
 
     let user = [];
 
     document.querySelectorAll('.joker').forEach(el => {
-      el.addEventListener('click', () => {
+      el.addEventListener('click', async () => {
         user.push(el.dataset.id);
-        if (user.length === correct.length) {
-          if (JSON.stringify(user) === JSON.stringify(correct)) {
+        if (user.length === 5) {
+          const userInputString = user.join(",");
+          const userHash = await sha256(userInputString);
+          if (userHash === correctHash) {
             alert("Oh oh, you got me, but can't catch me 😈");
             setTimeout(() => {
               window.location.href = "level2.html";
@@ -84,6 +94,15 @@
 
   <!-- Hidden hint image -->
   <!-- Is there something in the image's EXIF? -->
+
+  <!--
+  Hint for advanced users:
+  If you know the original hint.png file size in bytes (say OFFSET),
+  you can extract the hidden image by running:
+  dd if=hint.png of=secret_extracted.png bs=1 skip=OFFSET
+  Replace OFFSET with the actual file size.
+  -->
+
   <img id="hiddenHint" src="images/hint.png" alt="Hidden Hint" />
 
   <script>
