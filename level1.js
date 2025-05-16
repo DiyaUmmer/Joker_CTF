@@ -7,7 +7,7 @@ async function sha256(message) {
 }
 
 // The known correct hash for the order "3,1,5,2,4"
-const correctHash = "c6e6915c5a5787e90d0b41f5a8b0f66d51eb5c9be435440ab395ef8a228d521f";
+const correctHash = "ce20169db964e41ea7518836aab50628";
 
 let user = [];
 
