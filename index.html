@@ -69,47 +69,14 @@
   <!-- Hint: Try using `strings` or `exiftool` to look deeper -->
   <img id="hiddenHint" src="images/hint.png" alt="Hidden Hint" />
 
-  <script>
-    // Hash function
-    async function sha256(message) {
-      const msgBuffer = new TextEncoder().encode(message);
-      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-      const hashArray = Array.from(new Uint8Array(hashBuffer));
-      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    }
+  <<script>
+(function(){
+  async function a(b){const c=new TextEncoder().encode(b),d=await crypto.subtle.digest("SHA-256",c);return Array.from(new Uint8Array(d)).map(e=>e.toString(16).padStart(2,"0")).join("")}
+  const f="c6e6915c5a5787e90d0b41f5a8b0f66d51eb5c9be435440ab395ef8a228d521f";
+  let g=[];
+  document.querySelectorAll(".joker").forEach(h=>{h.addEventListener("click",async()=>{g.push(h.dataset.id);if(g.length===5){let i=g.join(","),j=await a(i);j===f?(alert("Oh oh, you got me, but can't catch me 😈"),setTimeout(()=>{window.location.href="level2.html"},2e3)):(alert("Wrong order! Try again."),g=[])}})});
+})();
+</script>
 
-    // Correct hash for: "3,1,5,2,4"
-    const correctHash = "c6e6915c5a5787e90d0b41f5a8b0f66d51eb5c9be435440ab395ef8a228d521f";
-
-    let user = [];
-
-    document.querySelectorAll('.joker').forEach(el => {
-      el.addEventListener('click', async () => {
-        user.push(el.dataset.id);
-        if (user.length === 5) {
-          const userInputString = user.join(",");
-          const userHash = await sha256(userInputString);
-          if (userHash === correctHash) {
-            alert("Oh oh, you got me, but can't catch me 😈");
-            setTimeout(() => {
-              window.location.href = "level2.html";
-            }, 2000);
-          } else {
-            alert("Wrong order! Try again.");
-            user = [];
-          }
-        }
-      });
-    });
-
-    // Hint toggle logic
-    const trigger = document.getElementById('hintTrigger');
-    const hiddenHint = document.getElementById('hiddenHint');
-
-    trigger.addEventListener('click', () => {
-      hiddenHint.style.display = (hiddenHint.style.display === "none" || hiddenHint.style.display === "") 
-        ? "block" : "none";
-    });
-  </script>
 </body>
 </html>
